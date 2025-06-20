@@ -21,3 +21,4 @@ A request for Max at 2025-06-10 08:00:00 for 30 minutes at Parklands, with statu
 A request for Bella at 2025-06-10 09:30:00 for 45 minutes at Beachside Ave, with status accepted.
 A request for Rocky at 2025-06-11 10:00:00 for 60 minutes at City Square, with status open.
 A request for Luna at 2025-06-12 10:00:00 for 30 minutes at Botanic Gardens, with status completed.
+A request for Zoe at 2025-06-13 16:30:00 for 40 minutes at Botanic Gardens, with status completed.
