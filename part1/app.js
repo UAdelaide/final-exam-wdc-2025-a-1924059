@@ -20,6 +20,6 @@ async function init() {
         ('bobwalker', 'bob@example.com', 'hashed456', 'walker');
         `);
 
-    await
+      await d
     }
 }
