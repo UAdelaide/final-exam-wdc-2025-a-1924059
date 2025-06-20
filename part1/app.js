@@ -103,6 +103,6 @@ app.get('/api/walkers/summary', async (req, res) => {
 
 init().then(() => {
   app.listen(port, () => {
-    console.log(`🚀 Server is running at http://localhost:${port}`);
+    console.log(`Server is running at http://localhost:${port}`);
   });
 });
