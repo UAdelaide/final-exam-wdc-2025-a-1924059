@@ -30,7 +30,7 @@ async function init() {
         WHERE name = 'Max'
         AND owner_id = (SELECT user_id FROM Users WHERE username = 'alice123')
       );
-`   );
+`  );
 
 
     await db.query(`
