@@ -1,4 +1,4 @@
-SQL INSERT commands were manually executed via terminal on 2025-06-20.
+SQL INSERT commands were manually executed through the terminal
 
 Users inserted:
 - alice123
