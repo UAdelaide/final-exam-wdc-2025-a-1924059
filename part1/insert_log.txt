@@ -1,0 +1,14 @@
+SQL INSERT commands were manually executed via terminal on 2025-06-20.
+
+Users inserted:
+- alice123
+- bobwalker
+- carol123
+- davidwalker
+- emilyowner
+
+Dogs inserted:
+- Max, Bella, Rocky, Luna, Zoe
+
+WalkRequests inserted:
+- 5 entries between 2025-06-10 and 2025-06-13
