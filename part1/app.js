@@ -53,7 +53,6 @@ async function init() {
   }
 }
 
-// ✅ /api/dogs route
 app.get('/api/dogs', async (req, res) => {
   try {
     const [rows] = await db.query(`
@@ -67,7 +66,6 @@ app.get('/api/dogs', async (req, res) => {
   }
 });
 
-// ✅ /api/walkrequests/open route
 app.get('/api/walkrequests/open', async (req, res) => {
   try {
     const [rows] = await db.query(`
@@ -89,7 +87,6 @@ app.get('/api/walkrequests/open', async (req, res) => {
   }
 });
 
-// ✅ /api/walkers/summary route
 app.get('/api/walkers/summary', async (req, res) => {
   try {
     const [rows] = await db.query(`
@@ -110,7 +107,6 @@ app.get('/api/walkers/summary', async (req, res) => {
   }
 });
 
-// ✅ Start server after DB is ready
 init().then(() => {
   app.listen(port, () => {
     console.log(`🚀 Server running at http://localhost:${port}`);
