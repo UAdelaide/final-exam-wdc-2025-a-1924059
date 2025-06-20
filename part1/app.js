@@ -112,7 +112,6 @@ app.get('/api/walkers/summary', async (req, res) => {
   }
 });
 
-// Start the server after database setup
 init().then(() => {
   app.listen(port, () => {
     console.log(`🚀 Server is running at http://localhost:${port}`);
