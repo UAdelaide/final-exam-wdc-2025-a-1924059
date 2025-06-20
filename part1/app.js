@@ -5,3 +5,7 @@ const port = 8080;
 
 let db;
 
+// connect to mysql and insert the test data
+async function init() {
+    
+}
