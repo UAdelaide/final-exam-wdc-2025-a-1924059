@@ -52,7 +52,7 @@ async function init() {
   }
 }
 
-// Returns a list of all dogs with their size and owner's username
+// returns a list of all dogs with their size and owner's username
 app.get('/api/dogs', async (req, res) => {
   try {
     const [rows] = await db.query(`
@@ -66,8 +66,7 @@ app.get('/api/dogs', async (req, res) => {
   }
 });
 
-// Route: GET /api/walkrequests/open
-// Returns all open walk requests with dog name, time, and owner's username
+// returns all open walk requests with dog name, time, and owner's username
 app.get('/api/walkrequests/open', async (req, res) => {
   try {
     const [rows] = await db.query(`
