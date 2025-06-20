@@ -9,7 +9,9 @@ let db;
 async function init() {
     try {
       db = await mysql.createConnection({
-        
+        host: 'localhost',
+        user: 'root',
+        database: 'DogWalkService'
       })
     }
 }
