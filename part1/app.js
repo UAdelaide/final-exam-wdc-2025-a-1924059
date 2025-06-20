@@ -13,5 +13,8 @@ async function init() {
         database: 'DogWalkService'
     });
 
-    await db.qury
+    await db.query(`
+        `
+
+    )
 }
