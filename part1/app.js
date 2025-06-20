@@ -13,6 +13,7 @@ async function init() {
       database: 'DogWalkService'
     });
 
+    // Insert test users
     await db.query(`
       INSERT IGNORE INTO Users (username, email, password_hash, role)
       VALUES
@@ -20,6 +21,7 @@ async function init() {
       ('bobwalker', 'bob@example.com', 'hashed456', 'walker');
     `);
 
+    // Insert dog 'Max' for alice123 only if not already there (safe with UNIQUE constraint)
     await db.query(`
       INSERT IGNORE INTO Dogs (owner_id, name, size)
       VALUES (
@@ -29,24 +31,32 @@ async function init() {
       );
     `);
 
+    // Insert walk request for Max only if it doesn't already exist at the same time
     await db.query(`
-      INSERT IGNORE INTO WalkRequests (dog_id, requested_time, duration_minutes, location, status)
-      VALUES (
-        (SELECT dog_id FROM Dogs WHERE name = 'Max'),
-        '2025-06-10 08:00:00',
-        30,
-        'Parklands',
-        'open'
+      INSERT INTO WalkRequests (dog_id, requested_time, duration_minutes, location, status)
+      SELECT * FROM (
+        SELECT
+          (SELECT dog_id FROM Dogs WHERE name = 'Max' AND owner_id = (SELECT user_id FROM Users WHERE username = 'alice123')),
+          '2025-06-10 08:00:00',
+          30,
+          'Parklands',
+          'open'
+      ) AS tmp
+      WHERE NOT EXISTS (
+        SELECT 1 FROM WalkRequests
+        WHERE dog_id = (SELECT dog_id FROM Dogs WHERE name = 'Max' AND owner_id = (SELECT user_id FROM Users WHERE username = 'alice123'))
+        AND requested_time = '2025-06-10 08:00:00'
       );
     `);
 
-    console.log('Connected to database and inserted the test data');
+    console.log('✅ Connected to database and inserted test data');
   } catch (err) {
-    console.error('ERROR: issue connecting to database:', err);
+    console.error('❌ ERROR: Issue connecting to database:', err);
     process.exit(1);
   }
 }
 
+// Route: /api/dogs
 app.get('/api/dogs', async (req, res) => {
   try {
     const [rows] = await db.query(`
@@ -60,6 +70,7 @@ app.get('/api/dogs', async (req, res) => {
   }
 });
 
+// Route: /api/walkrequests/open
 app.get('/api/walkrequests/open', async (req, res) => {
   try {
     const [rows] = await db.query(`
@@ -81,6 +92,7 @@ app.get('/api/walkrequests/open', async (req, res) => {
   }
 });
 
+// Route: /api/walkers/summary
 app.get('/api/walkers/summary', async (req, res) => {
   try {
     const [rows] = await db.query(`
@@ -103,6 +115,6 @@ app.get('/api/walkers/summary', async (req, res) => {
 
 init().then(() => {
   app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);
+    console.log(`🚀 Server is running at http://localhost:${port}`);
   });
 });
