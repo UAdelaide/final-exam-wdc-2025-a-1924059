@@ -12,9 +12,4 @@ async function init() {
         user: 'root',
         database: 'DogWalkService'
     });
-
-    await db.query(`
-        `
-
-    )
 }
