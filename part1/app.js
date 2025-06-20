@@ -21,7 +21,6 @@ async function init() {
       ('bobwalker', 'bob@example.com', 'hashed456', 'walker');
     `);
 
-    // Insert dog 'Max' for alice123 only if not already there (safe with UNIQUE constraint)
     await db.query(`
       INSERT IGNORE INTO Dogs (owner_id, name, size)
       VALUES (
@@ -31,7 +30,6 @@ async function init() {
       );
     `);
 
-    // Insert walk request for Max only if it doesn't already exist at the same time
     await db.query(`
       INSERT INTO WalkRequests (dog_id, requested_time, duration_minutes, location, status)
       SELECT * FROM (
@@ -49,9 +47,9 @@ async function init() {
       );
     `);
 
-    console.log('✅ Connected to database and inserted test data');
+    console.log('Connected to database and inserted test data');
   } catch (err) {
-    console.error('❌ ERROR: Issue connecting to database:', err);
+    console.error('ERROR: Issue connecting to database:', err);
     process.exit(1);
   }
 }
@@ -70,7 +68,6 @@ app.get('/api/dogs', async (req, res) => {
   }
 });
 
-// Route: /api/walkrequests/open
 app.get('/api/walkrequests/open', async (req, res) => {
   try {
     const [rows] = await db.query(`
@@ -92,7 +89,6 @@ app.get('/api/walkrequests/open', async (req, res) => {
   }
 });
 
-// Route: /api/walkers/summary
 app.get('/api/walkers/summary', async (req, res) => {
   try {
     const [rows] = await db.query(`
@@ -115,6 +111,6 @@ app.get('/api/walkers/summary', async (req, res) => {
 
 init().then(() => {
   app.listen(port, () => {
-    console.log(`🚀 Server is running at http://localhost:${port}`);
+    console.log(`Server is running at http://localhost:${port}`);
   });
 });
