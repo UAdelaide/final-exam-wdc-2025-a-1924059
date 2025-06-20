@@ -47,13 +47,11 @@ async function init() {
 
     console.log('✅ Connected to database and inserted test data');
   } catch (err) {
-    console.error('❌ Error connecting to database:', err);
+    console.error('ERROR: issue connecting to database:', err);
     process.exit(1);
   }
 }
 
-// Route: GET /api/dogs
-// Returns a list of all dogs with their size and owner's username
 app.get('/api/dogs', async (req, res) => {
   try {
     const [rows] = await db.query(`
@@ -67,8 +65,6 @@ app.get('/api/dogs', async (req, res) => {
   }
 });
 
-// Route: GET /api/walkrequests/open
-// Returns all open walk requests with dog name, time, and owner's username
 app.get('/api/walkrequests/open', async (req, res) => {
   try {
     const [rows] = await db.query(`
@@ -90,8 +86,6 @@ app.get('/api/walkrequests/open', async (req, res) => {
   }
 });
 
-// Route: GET /api/walkers/summary
-// Returns each walker's username, number of ratings, average rating, and completed walks
 app.get('/api/walkers/summary', async (req, res) => {
   try {
     const [rows] = await db.query(`
