@@ -14,6 +14,8 @@ async function init() {
         database: 'DogWalkService'
       });
 
-      
+      await db.query(`
+        
+        `)
     }
 }
