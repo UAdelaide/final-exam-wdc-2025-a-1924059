@@ -23,7 +23,7 @@ async function init() {
       await db.query(`
         INSERT IGNORE INTO Dogs (owner_id, name, size)
         VALUES (
-            
+        
         )
 
         `)
