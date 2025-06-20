@@ -33,7 +33,6 @@ async function init() {
       );
     `);
 
-    // Insert one test walk request
     await db.query(`
       INSERT IGNORE INTO WalkRequests (dog_id, requested_time, duration_minutes, location, status)
       VALUES (
@@ -45,7 +44,7 @@ async function init() {
       );
     `);
 
-    console.log('✅ Connected to database and inserted test data');
+    console.log('Connected to database and inserted the test data');
   } catch (err) {
     console.error('ERROR: issue connecting to database:', err);
     process.exit(1);
