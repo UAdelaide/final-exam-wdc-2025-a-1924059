@@ -13,7 +13,6 @@ async function init() {
       database: 'DogWalkService'
     });
 
-    // Insert test users
     await db.query(`
       INSERT IGNORE INTO Users (username, email, password_hash, role)
       VALUES
@@ -54,7 +53,6 @@ async function init() {
   }
 }
 
-// Route: /api/dogs
 app.get('/api/dogs', async (req, res) => {
   try {
     const [rows] = await db.query(`
