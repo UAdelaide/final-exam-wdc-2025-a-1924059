@@ -4,9 +4,9 @@ const mysql = require('mysql2/promise');
 const app = express();
 const port = 8080;
 
-let db;
+let db; // This will hold the database connection
 
-// Connect to MySQL and insert test data
+// Connect to the database and insert test data
 async function init() {
   try {
     db = await mysql.createConnection({
@@ -15,13 +15,15 @@ async function init() {
       database: 'DogWalkService'
     });
 
-    // Optional: Insert minimal data for testing
+    // Insert sample users (if not already in the table)
     await db.query(`
-      INSERT IGNORE INTO Users (username, email, password_hash, role) VALUES
+      INSERT IGNORE INTO Users (username, email, password_hash, role)
+      VALUES
       ('alice123', 'alice@example.com', 'hashed123', 'owner'),
       ('bobwalker', 'bob@example.com', 'hashed456', 'walker');
     `);
 
+    // Insert one test dog
     await db.query(`
       INSERT IGNORE INTO Dogs (owner_id, name, size)
       VALUES (
@@ -31,6 +33,7 @@ async function init() {
       );
     `);
 
+    // Insert one test walk request
     await db.query(`
       INSERT IGNORE INTO WalkRequests (dog_id, requested_time, duration_minutes, location, status)
       VALUES (
@@ -42,13 +45,15 @@ async function init() {
       );
     `);
 
-    console.log('Connected and test data inserted');
+    console.log('✅ Connected to database and inserted test data');
   } catch (err) {
-    console.error('Database error:', err);
+    console.error('❌ Error connecting to database:', err);
     process.exit(1);
   }
 }
 
+// Route: GET /api/dogs
+// Returns a list of all dogs with their size and owner's username
 app.get('/api/dogs', async (req, res) => {
   try {
     const [rows] = await db.query(`
@@ -58,10 +63,12 @@ app.get('/api/dogs', async (req, res) => {
     `);
     res.json(rows);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to retrieve dogs' });
+    res.status(500).json({ error: 'Failed to get dogs' });
   }
 });
 
+// Route: GET /api/walkrequests/open
+// Returns all open walk requests with dog name, time, and owner's username
 app.get('/api/walkrequests/open', async (req, res) => {
   try {
     const [rows] = await db.query(`
@@ -79,10 +86,12 @@ app.get('/api/walkrequests/open', async (req, res) => {
     `);
     res.json(rows);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to retrieve open walk requests' });
+    res.status(500).json({ error: 'Failed to get open walk requests' });
   }
 });
 
+// Route: GET /api/walkers/summary
+// Returns each walker's username, number of ratings, average rating, and completed walks
 app.get('/api/walkers/summary', async (req, res) => {
   try {
     const [rows] = await db.query(`
@@ -99,12 +108,13 @@ app.get('/api/walkers/summary', async (req, res) => {
     `);
     res.json(rows);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to retrieve walker summary' });
+    res.status(500).json({ error: 'Failed to get walker summary' });
   }
 });
 
+// Start the server after database setup
 init().then(() => {
   app.listen(port, () => {
-    console.log(`API server running at http://localhost:${port}`);
+    console.log(`Server is running at http://localhost:${port}`);
   });
 });
