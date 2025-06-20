@@ -29,6 +29,7 @@ async function init() {
             );
         `);
 
-        
+       await db.query()
+       
     }
 }
