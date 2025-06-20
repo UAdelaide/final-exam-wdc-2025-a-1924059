@@ -33,7 +33,7 @@ async function init() {
       INSERT INTO WalkRequests (dog_id, requested_time, duration_minutes, location, status)
       SELECT * FROM (
         SELECT
-          (SELECT dog_id FROM Dogs WHERE name = 'Max' AND owner_id = (SELECT user_id FROM Users WHERE username = 'alice123')),
+          (SELECT dog_id FROM Dogs WHERE name = 'Max' AND owner_id = (SELECT user_id FROM Users WHERE username = 'alice123') LIMIT 1),
           '2025-06-10 08:00:00',
           30,
           'Parklands',
@@ -41,7 +41,7 @@ async function init() {
       ) AS tmp
       WHERE NOT EXISTS (
         SELECT 1 FROM WalkRequests
-        WHERE dog_id = (SELECT dog_id FROM Dogs WHERE name = 'Max' AND owner_id = (SELECT user_id FROM Users WHERE username = 'alice123'))
+        WHERE dog_id = (SELECT dog_id FROM Dogs WHERE name = 'Max' AND owner_id = (SELECT user_id FROM Users WHERE username = 'alice123') LIMIT 1)
         AND requested_time = '2025-06-10 08:00:00'
       );
     `);
@@ -53,6 +53,7 @@ async function init() {
   }
 }
 
+// ✅ /api/dogs route
 app.get('/api/dogs', async (req, res) => {
   try {
     const [rows] = await db.query(`
@@ -66,6 +67,7 @@ app.get('/api/dogs', async (req, res) => {
   }
 });
 
+// ✅ /api/walkrequests/open route
 app.get('/api/walkrequests/open', async (req, res) => {
   try {
     const [rows] = await db.query(`
@@ -87,6 +89,7 @@ app.get('/api/walkrequests/open', async (req, res) => {
   }
 });
 
+// ✅ /api/walkers/summary route
 app.get('/api/walkers/summary', async (req, res) => {
   try {
     const [rows] = await db.query(`
@@ -107,8 +110,9 @@ app.get('/api/walkers/summary', async (req, res) => {
   }
 });
 
+// ✅ Start server after DB is ready
 init().then(() => {
   app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);
+    console.log(`🚀 Server running at http://localhost:${port}`);
   });
 });
