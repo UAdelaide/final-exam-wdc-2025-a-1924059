@@ -26,11 +26,11 @@ async function init() {
         SELECT (SELECT user_id FROM Users WHERE username = 'alice123'), 'Max', 'medium'
       ) AS tmp
       WHERE NOT EXISTS (
-    SELECT 1 FROM Dogs
-    WHERE name = 'Max'
-    AND owner_id = (SELECT user_id FROM Users WHERE username = 'alice123')
-  );
-`);
+        SELECT 1 FROM Dogs
+        WHERE name = 'Max'
+        AND owner_id = (SELECT user_id FROM Users WHERE username = 'alice123')
+      );
+`   );
 
 
     await db.query(`
