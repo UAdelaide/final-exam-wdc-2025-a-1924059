@@ -21,17 +21,13 @@ async function init() {
     `);
 
     await db.query(`
-      INSERT INTO Dogs (owner_id, name, size)
-      SELECT * FROM (
-        SELECT (SELECT user_id FROM Users WHERE username = 'alice123'), 'Max', 'medium'
-      ) AS tmp
-      WHERE NOT EXISTS (
-        SELECT 1 FROM Dogs
-        WHERE name = 'Max'
-        AND owner_id = (SELECT user_id FROM Users WHERE username = 'alice123')
+      INSERT IGNORE INTO Dogs (owner_id, name, size)
+      VALUES (
+        (SELECT user_id FROM Users WHERE username = 'alice123'),
+        'Max',
+        'medium'
       );
-`  );
-
+    `);
 
     await db.query(`
       INSERT IGNORE INTO WalkRequests (dog_id, requested_time, duration_minutes, location, status)
