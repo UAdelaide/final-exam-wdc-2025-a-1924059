@@ -1,12 +1,10 @@
 const express = require('express');
 const mysql = require('mysql2/promise');
-
 const app = express();
 const port = 8080;
 
-let db; // This will hold the database connection
+let db;
 
-// Connect to the database and insert test data
 async function init() {
   try {
     db = await mysql.createConnection({
@@ -15,7 +13,6 @@ async function init() {
       database: 'DogWalkService'
     });
 
-    // Insert sample users (if not already in the table)
     await db.query(`
       INSERT IGNORE INTO Users (username, email, password_hash, role)
       VALUES
@@ -23,7 +20,6 @@ async function init() {
       ('bobwalker', 'bob@example.com', 'hashed456', 'walker');
     `);
 
-    // Insert one test dog
     await db.query(`
       INSERT IGNORE INTO Dogs (owner_id, name, size)
       VALUES (
