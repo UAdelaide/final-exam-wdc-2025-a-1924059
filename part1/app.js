@@ -21,11 +21,11 @@ async function init() {
     `);
 
     await db.query(`
-  INSERT INTO Dogs (owner_id, name, size)
-  SELECT * FROM (
-    SELECT (SELECT user_id FROM Users WHERE username = 'alice123'), 'Max', 'medium'
-  ) AS tmp
-  WHERE NOT EXISTS (
+      INSERT INTO Dogs (owner_id, name, size)
+      SELECT * FROM (
+        SELECT (SELECT user_id FROM Users WHERE username = 'alice123'), 'Max', 'medium'
+      ) AS tmp
+      WHERE NOT EXISTS (
     SELECT 1 FROM Dogs
     WHERE name = 'Max'
     AND owner_id = (SELECT user_id FROM Users WHERE username = 'alice123')
