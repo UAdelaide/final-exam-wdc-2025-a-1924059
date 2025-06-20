@@ -27,7 +27,6 @@ async function init() {
         'Max',
         'medium'
         );
-
         `);
     }
 }
