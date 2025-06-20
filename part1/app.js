@@ -1,12 +1,10 @@
 const express = require('express');
 const mysql = require('mysql2/promise');
-
 const app = express();
 const port = 8080;
 
 let db;
 
-// Connect to MySQL and insert test data
 async function init() {
   try {
     db = await mysql.createConnection({
@@ -15,9 +13,9 @@ async function init() {
       database: 'DogWalkService'
     });
 
-    // Optional: Insert minimal data for testing
     await db.query(`
-      INSERT IGNORE INTO Users (username, email, password_hash, role) VALUES
+      INSERT IGNORE INTO Users (username, email, password_hash, role)
+      VALUES
       ('alice123', 'alice@example.com', 'hashed123', 'owner'),
       ('bobwalker', 'bob@example.com', 'hashed456', 'walker');
     `);
@@ -32,19 +30,25 @@ async function init() {
     `);
 
     await db.query(`
-      INSERT IGNORE INTO WalkRequests (dog_id, requested_time, duration_minutes, location, status)
-      VALUES (
-        (SELECT dog_id FROM Dogs WHERE name = 'Max'),
-        '2025-06-10 08:00:00',
-        30,
-        'Parklands',
-        'open'
+      INSERT INTO WalkRequests (dog_id, requested_time, duration_minutes, location, status)
+      SELECT * FROM (
+        SELECT
+          (SELECT dog_id FROM Dogs WHERE name = 'Max' AND owner_id = (SELECT user_id FROM Users WHERE username = 'alice123') LIMIT 1),
+          '2025-06-10 08:00:00',
+          30,
+          'Parklands',
+          'open'
+      ) AS tmp
+      WHERE NOT EXISTS (
+        SELECT 1 FROM WalkRequests
+        WHERE dog_id = (SELECT dog_id FROM Dogs WHERE name = 'Max' AND owner_id = (SELECT user_id FROM Users WHERE username = 'alice123') LIMIT 1)
+        AND requested_time = '2025-06-10 08:00:00'
       );
     `);
 
-    console.log('Connected and test data inserted');
+    console.log('Connected to database and inserted test data');
   } catch (err) {
-    console.error('Database error:', err);
+    console.error('ERROR: Issue connecting to database:', err);
     process.exit(1);
   }
 }
@@ -58,7 +62,7 @@ app.get('/api/dogs', async (req, res) => {
     `);
     res.json(rows);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to retrieve dogs' });
+    res.status(500).json({ error: 'Failed to get dogs' });
   }
 });
 
@@ -79,7 +83,7 @@ app.get('/api/walkrequests/open', async (req, res) => {
     `);
     res.json(rows);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to retrieve open walk requests' });
+    res.status(500).json({ error: 'Failed to get open walk requests' });
   }
 });
 
@@ -99,12 +103,12 @@ app.get('/api/walkers/summary', async (req, res) => {
     `);
     res.json(rows);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to retrieve walker summary' });
+    res.status(500).json({ error: 'Failed to get walker summary' });
   }
 });
 
 init().then(() => {
   app.listen(port, () => {
-    console.log(`API server running at http://localhost:${port}`);
+    console.log(`🚀 Server running at http://localhost:${port}`);
   });
 });
