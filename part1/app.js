@@ -45,9 +45,9 @@ async function init() {
       );
     `);
 
-    console.log('✅ Connected to database and inserted test data');
+    console.log('Connected to database and inserted test data');
   } catch (err) {
-    console.error('❌ Error connecting to database:', err);
+    console.error('Error connecting to database:', err);
     process.exit(1);
   }
 }
