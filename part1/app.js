@@ -7,5 +7,7 @@ let db;
 
 // connecting to mysql and inserting the test data
 async function init() {
-    db = await
+    db = await mysql.createConnection({
+
+    })
 }
