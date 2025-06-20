@@ -12,7 +12,7 @@ A user with the username emilyowner, email emily@example.com, password hash hash
 Five dogs:
 A dog named Max, who is medium-sized and owned by alice123.
 A dog named Bella, who is small and owned by carol123.
-Three more dogs with details of your choosing.
+A dog named Bella, who is small and owned by carol123.
 
 Five walk requests:
 A request for Max at 2025-06-10 08:00:00 for 30 minutes at Parklands, with status open.
