@@ -12,6 +12,8 @@ async function init() {
         host: 'localhost',
         user: 'root',
         database: 'DogWalkService'
-      })
+      });
+
+      
     }
 }
