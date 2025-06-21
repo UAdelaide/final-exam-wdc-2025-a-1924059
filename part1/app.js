@@ -103,7 +103,7 @@ app.get('/api/walkers/summary', async (req, res) => {
     `);
     res.json(rows);
   } catch (err) {
-    res.status(500).json({ error: 'ERROR: Failed to get walker summary' });
+    res.status(500).json({ error: 'ERROR: FAILED to get walker summary' });
   }
 });
 
