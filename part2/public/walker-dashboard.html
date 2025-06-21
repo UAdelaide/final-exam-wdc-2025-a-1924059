@@ -61,22 +61,27 @@
 
         async function applyToWalk(requestId) {
           try {
-            const res = await fetch(`/api/walks/${requestId}/apply`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ walker_id: user })
-            });
-            const result = await res.json();
+    const user = await getCurrentUser();
+    if (!user) return; // Stop if user could not be retrieved
 
-            if (!res.ok) throw new Error(result.error || 'Application failed');
-            message.value = result.message;
-            error.value = '';
-            await loadWalkRequests();
-          } catch (err) {
-            error.value = err.message;
-            message.value = '';
-          }
-        }
+    const res = await fetch(`/api/walks/${requestId}/apply`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ walker_id: user.user_id }) // Use dynamic ID
+    });
+
+    const result = await res.json();
+    if (!res.ok) throw new Error(result.error || 'Application failed');
+
+    message.value = result.message;
+    error.value = '';
+    await loadWalkRequests();
+  } catch (err) {
+    error.value = err.message;
+    message.value = '';
+  }
+}
+
 
         async function logout() {
           await fetch('/api/users/logout', { method: 'POST' });
