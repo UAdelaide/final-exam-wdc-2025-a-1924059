@@ -62,7 +62,7 @@ app.get('/api/dogs', async (req, res) => {
     `);
     res.json(rows);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to get dogs' });
+    res.status(500).json({ error: 'ERROR: FAILED to get dogs' });
   }
 });
 
