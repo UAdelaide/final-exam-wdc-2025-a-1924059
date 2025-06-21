@@ -83,7 +83,7 @@ app.get('/api/walkrequests/open', async (req, res) => {
     `);
     res.json(rows);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to get open walk requests' });
+    res.status(500).json({ error: 'ERROR: FAILED to get open walk requests' });
   }
 });
 
