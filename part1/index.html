@@ -41,7 +41,9 @@
     <div id="app" class="'container">
         <h1>Welcome to Dog of the Day Website!</h1>
         <button @click="loadDog">Click me to load the Dog!</button>
-        <div v-if=""
+        <div v-if="dogImage">
+            <img :src=""dogImage"
+        </div>
     </div>
 </body>
 </html>
