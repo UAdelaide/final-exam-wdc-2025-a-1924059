@@ -49,5 +49,7 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ success: false, message: 'Invalid username or password' });
     }
 
+    // store in the session
+
 
 module.exports = router;
