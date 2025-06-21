@@ -42,7 +42,8 @@
         <h1>Welcome to Dog of the Day Website!</h1>
         <button @click="loadDog">Click me to load the Dog!</button>
         <div v-if="dogImage">
-            <img :src=""dogImage"
+            <img :src="dogImage" alt="Dog" />
+            
         </div>
     </div>
 </body>
