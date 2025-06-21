@@ -12,6 +12,13 @@ router.get('/', async (req, res) => {
   }
 });
 
+// GET /dogs (dogs owned by logged-in user)
+router.get('/dogs', async (req, res) => {
+  if (!req.session.user || req.session.user.role !== 'owner') {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+
 // POST a new user (simple signup)
 router.post('/register', async (req, res) => {
   const { username, email, password, role } = req.body;
