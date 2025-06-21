@@ -19,4 +19,5 @@ app.use(session({
 const walkRoutes = require('./routes/walkRoutes');
 const user = require('./routes/userRoutes');
 
-app.use('/api/walks', )
+app.use('/api/walks', walkRoutes);
+app.use('/api/users', user);
