@@ -28,3 +28,18 @@
     </div>
 
     <!-- user login page-->
+    <hr>
+    <h2 class="mt-4">Login</h2>
+    <form @submit.prevent="login" class="mb-3" style="max-width: 300px;">
+      <div class="mb-2">
+        <label class="form-label">Username</label>
+        <input v-model="username" class="form-control" required>
+      </div>
+      <div class="mb-2">
+        <label class="form-label">Password</label>
+        <input type="password" v-model="password" class="form-control" required>
+      </div>
+      <button class="btn btn-primary">Log In</button>
+    </form>
+    <p v-if="error" class="text-danger">{{ error }}</p>
+  </div>
