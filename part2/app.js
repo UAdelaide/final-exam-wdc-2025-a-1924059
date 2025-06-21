@@ -14,3 +14,6 @@ app.use(session({
     resave: false,
     saveUninitialized: true
 }));
+
+// Routes
+const walkRoutes = require('.')
