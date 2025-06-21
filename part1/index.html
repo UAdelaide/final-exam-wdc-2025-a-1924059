@@ -57,7 +57,9 @@
                 }
             },
             methods: {
-                async loadDog
+                async loadDog() {
+                    const res = await fetch('https://dog.ceo/api')
+                }
             }
         })
 
