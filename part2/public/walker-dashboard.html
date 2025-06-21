@@ -89,7 +89,8 @@
             if (!res.ok) throw new Error('User not logged in');
             return await res.join();
           } catch (err) {
-            error.value = 'FAILED to get current user'
+            error.value = 'ERROR: FAILED to get current user'
+            return null;
           }
         }
 
