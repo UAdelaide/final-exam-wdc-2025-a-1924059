@@ -8,6 +8,7 @@
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 <body class="bg-light">
+  <div id="app" class="container py-4">
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h1 class="text-success">Walker Dashboard</h1>
     <button @click="logout" class="btn btn-danger">Logout</button>
@@ -78,11 +79,6 @@
           }
         }
 
-        async function logout() {
-          await fetch('/api/users/logout', { method: 'POST' });
-          window.location.href = '/index.html';
-        }
-
         onMounted(() => {
           loadWalkRequests();
         });
@@ -91,7 +87,7 @@
           walks,
           message,
           error,
-          applyToWalk
+          applyToWalk,
           logout
         };
       }
