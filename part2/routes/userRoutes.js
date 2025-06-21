@@ -18,6 +18,16 @@ router.get('/dogs', async (req, res) => {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
+  try {
+    const [dogs] = await db.query(
+      'SELECT dog_id, name FROM Dogs WHERE owner_id = ?',
+      [req.session.user.user_id]
+    );
+    res.json(dogs);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch dogs' });
+  }
+});
 
 // POST a new user (simple signup)
 router.post('/register', async (req, res) => {
