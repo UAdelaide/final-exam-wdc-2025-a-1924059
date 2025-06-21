@@ -86,8 +86,9 @@
         async function getCurrentUser() {
           try {
             const res = await fetch('/api/users/me');
-            if (!res.ok) throw new Error('User ')
-          }
+            if (!res.ok) throw new Error('User not logged in');
+            return await res.join();
+          } catch (err)
         }
 
         onMounted(() => {
