@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// GET /dogs (dogs owned by logged-in user)
+// GET dogs owned by logged-in user
 router.get('/dogs', async (req, res) => {
   if (!req.session.user || req.session.user.role !== 'owner') {
     return res.status(401).json({ error: 'Unauthorized' });
