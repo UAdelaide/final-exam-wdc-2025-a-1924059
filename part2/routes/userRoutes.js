@@ -50,6 +50,7 @@ router.post('/login', async (req, res) => {
     }
 
     // store in the session
+    req.session.user = rows[0];
 
 
 module.exports = router;
