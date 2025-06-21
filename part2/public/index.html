@@ -18,3 +18,11 @@
     <a href="walker-dashboard.html" class="btn btn-outline-success">Walker Dashboard</a>
 
     <!-- dog of the day page-->
+    <hr>
+    <h2 class="mt-4">Dog of the Day!</h2>
+    <button @click="loadDog" class="btn btn-warning mb-3">Show Me a Dog!</button>
+    <div v-if="dogImage">
+      <img :src="dogImage" alt="Dog of the Day" class="img-fluid mb-2" style="max-width: 300px;">
+      <p class="fw-bold">Name: Anthony</p>
+      <p class="fw-bold">Breed: Secret</p>
+    </div>
