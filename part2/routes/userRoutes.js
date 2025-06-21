@@ -51,7 +51,17 @@ router.post('/login', async (req, res) => {
 
     // store in the session
     req.session.user = rows[0];
-    // choose where to redirect 
+    // choose where to redirect
+    const redirectTo = rows[0].role === 'owner'
+      ? '/owner-dashboard.html'
+      : '/walker-dashboard.html';
+
+    res.json({ success: true, redirectTo });
+  } catch (error) {
+    console.error('Login error:', error);
+    res.status(500).json({ success: false, message: 'Login failed' });
+  }
+});
 
 
 module.exports = router;
