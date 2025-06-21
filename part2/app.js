@@ -16,4 +16,5 @@ app.use(session({
 }));
 
 // Routes
-const walkRoutes = require('.')
+const walkRoutes = require('./routes/walkRoutes');
+const user = require('./routes/userRoutes');
